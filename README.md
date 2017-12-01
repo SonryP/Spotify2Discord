@@ -21,6 +21,7 @@ Mkasdhqiyet1i7euhuwqgerd123y2.t3fu1yi.eo218y7e7wadhi387asdk1
 
 ### This app uses:
 * Discord.net - https://github.com/RogueException/Discord.Net
+* Spotify Current Song Function by Gruhlum - https://stackoverflow.com/questions/37854194/get-current-song-name-for-a-local-application
 
 ### Original idea
 https://github.com/DiNitride/Discord-Music-Status
