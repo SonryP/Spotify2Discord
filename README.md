@@ -2,8 +2,8 @@
 ## Send your Current Spotify Song as Playing Status on Discord
 
 ### How it Works?
--First Download Spotify2Discord from Releases.
--Get your User Token from Discord, follow the next instructions...
+- First Download Spotify2Discord from [Here](https://github.com/SonryP/Spotify2Discord/releases).
+- Get your User Token from Discord, follow the next instructions...
 ```
 1- Open Discord. 
 2- Press Ctrl+Shift+i.
@@ -18,7 +18,7 @@ Token.txt Example
 ```
 Mkasdhqiyet1i7euhuwqgerd123y2.t3fu1yi.eo218y7e7wadhi387asdk1
 ```
--Open the app and Enjoy the "Msn Messenger Experience".
+- Open the app and Enjoy the "Msn Messenger Experience".
 
 ![ImgStatus](https://i.imgur.com/vTCyO0P.png)
 
