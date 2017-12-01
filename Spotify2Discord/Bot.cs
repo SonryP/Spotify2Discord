@@ -26,23 +26,17 @@ namespace Spotify2Discord {
             await _client.LoginAsync(TokenType.User, token);
             await _client.StartAsync();
             await _client.SetStatusAsync(UserStatus.Invisible);
-            //await _client.SetGameAsync(song);
             await MusicNew();
-           
         }
 
         public async Task MusicNew() {
             if (asong != song) {
                 if(asong == "Spotify - Stopped") {
-                    //await _client.SetStatusAsync(UserStatus.Invisible);
                     await _client.SetGameAsync("");
                     song = asong;
-                    //await Task.Delay(-1);
                 } else {
-                    //await _client.SetStatusAsync(UserStatus.Invisible);
                     await _client.SetGameAsync(asong);
                     song = asong;
-                    //await Task.Delay(-1);
                 }
             }
             
@@ -50,7 +44,6 @@ namespace Spotify2Discord {
 
         public async Task MusicStop() {
             await _client.SetGameAsync("");
-            //await Task.Delay(-1);
             await _client.StopAsync();
             await _client.LogoutAsync();
         }

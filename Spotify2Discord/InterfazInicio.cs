@@ -39,7 +39,7 @@ namespace Spotify2Discord {
         private void Btn_Comenzar_ClickAsync(object sender, EventArgs e) {
             Btn_Comenzar.Enabled = false;
             Btn_Detener.Enabled = true;
-            lbl_Cancion.Text = "Canción Actual: " + GetSpotifyTrackInfo();
+            lbl_Cancion.Text = "Current Song: " + GetSpotifyTrackInfo();
             robot = new Bot(token) {
                 token = token,
                 song = GetSpotifyTrackInfo()
@@ -57,13 +57,13 @@ namespace Spotify2Discord {
         string music;
         private void Timer1_Tick(object sender, EventArgs e) {
             if (ComprobarRepeticion(music)) {
-                lbl_Cancion.Text = "Canción Actual: " + GetSpotifyTrackInfo();
+                lbl_Cancion.Text = "Current Song: " + GetSpotifyTrackInfo();
                 music = GetSpotifyTrackInfo();
                 robot.asong = music;
                 robot.MusicNew();
 
             } else {
-                lbl_Cancion.Text = "Canción Actual: " + GetSpotifyTrackInfo();
+                lbl_Cancion.Text = "Current Song: " + GetSpotifyTrackInfo();
                 music = GetSpotifyTrackInfo();
                 robot.asong = music;
                 robot.MusicNew();
