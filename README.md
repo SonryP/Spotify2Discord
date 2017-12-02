@@ -1,6 +1,6 @@
 
 # Spotify2Discord <img src="https://i.imgur.com/noMinQN.png" width="40"> 
-## Send your Current Spotify Song as Listen to Status on Discord
+## Send your Current Spotify Song as Listening to Status on Discord
 
 ### How it Works?
 - First Download Spotify2Discord from [Here](https://github.com/SonryP/Spotify2Discord/releases).
