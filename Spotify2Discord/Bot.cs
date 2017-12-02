@@ -13,6 +13,7 @@ namespace Spotify2Discord {
         public string asong;
         public string token;
 
+
         public Bot(string tok) {
             token = tok;
             Task.Run(MainAsync);
@@ -35,7 +36,7 @@ namespace Spotify2Discord {
                     await _client.SetGameAsync("");
                     song = asong;
                 } else {
-                    await _client.SetGameAsync(asong);
+                    await _client.SetGameAsync(asong,null,(Discord.StreamType) 2);
                     song = asong;
                 }
             }
