@@ -1,5 +1,6 @@
-# Spotify2Discord
-## Send your Current Spotify Song as Playing Status on Discord
+
+# Spotify2Discord <img src="https://i.imgur.com/noMinQN.png" width="40"> 
+## Send your Current Spotify Song as Listen to Status on Discord
 
 ### How it Works?
 - First Download Spotify2Discord from [Here](https://github.com/SonryP/Spotify2Discord/releases).
@@ -20,9 +21,12 @@ Mkasdhqiyet1i7euhuwqgerd123y2.t3fu1yi.eo218y7e7wadhi387asdk1
 ```
 - Open the app and Enjoy the "Msn Messenger Experience".
 
-![ImgStatus](https://i.imgur.com/vTCyO0P.png)
+![ImgStatus](https://i.imgur.com/6DkRfdM.png)
 
 Note: Maybe you do not see changes in discord, ask a friend if he sees your status changed, or see the discord app on your smartphone.
+
+New: Minimize to tray.
+![Notifications](https://i.imgur.com/SuwlNPM.png)
 
 ### What I need?:
 * Spotify.
@@ -37,7 +41,7 @@ Note: Maybe you do not see changes in discord, ask a friend if he sees your stat
 https://github.com/DiNitride/Discord-Music-Status
 
 ### To-Do:
-* Logo (in progress...).
-* Debug the app.
-* Add custom modes to show the current song.
+~~* Logo (in progress...).~~
+* Debug the app. (60%?, need your help :3)
+* Add custom modes to show the current song (in progress...).
 * Add more music players support.
