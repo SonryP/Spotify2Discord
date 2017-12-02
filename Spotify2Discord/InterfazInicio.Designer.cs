@@ -24,6 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InterfazInicio));
             this.lbl_Cancion = new System.Windows.Forms.Label();
             this.Btn_Comenzar = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -35,9 +36,9 @@
             this.lbl_Cancion.AutoSize = true;
             this.lbl_Cancion.Location = new System.Drawing.Point(12, 9);
             this.lbl_Cancion.Name = "lbl_Cancion";
-            this.lbl_Cancion.Size = new System.Drawing.Size(85, 13);
+            this.lbl_Cancion.Size = new System.Drawing.Size(75, 13);
             this.lbl_Cancion.TabIndex = 0;
-            this.lbl_Cancion.Text = "Canción Actual: ";
+            this.lbl_Cancion.Text = "Current Song: ";
             // 
             // Btn_Comenzar
             // 
@@ -45,7 +46,7 @@
             this.Btn_Comenzar.Name = "Btn_Comenzar";
             this.Btn_Comenzar.Size = new System.Drawing.Size(214, 32);
             this.Btn_Comenzar.TabIndex = 1;
-            this.Btn_Comenzar.Text = "Comenzar";
+            this.Btn_Comenzar.Text = "Start";
             this.Btn_Comenzar.UseVisualStyleBackColor = true;
             this.Btn_Comenzar.Click += new System.EventHandler(this.Btn_Comenzar_ClickAsync);
             // 
@@ -61,7 +62,7 @@
             this.Btn_Detener.Name = "Btn_Detener";
             this.Btn_Detener.Size = new System.Drawing.Size(214, 32);
             this.Btn_Detener.TabIndex = 2;
-            this.Btn_Detener.Text = "Detener";
+            this.Btn_Detener.Text = "Stop";
             this.Btn_Detener.UseVisualStyleBackColor = true;
             this.Btn_Detener.Click += new System.EventHandler(this.Btn_Detener_Click);
             // 
@@ -73,9 +74,12 @@
             this.Controls.Add(this.Btn_Detener);
             this.Controls.Add(this.Btn_Comenzar);
             this.Controls.Add(this.lbl_Cancion);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "InterfazInicio";
             this.Text = "Spotify2Discord";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InterfazInicio_FormClosing);
             this.Load += new System.EventHandler(this.InterfazInicio_Load);
+            this.Resize += new System.EventHandler(this.InterfazInicio_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
