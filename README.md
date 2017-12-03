@@ -42,6 +42,7 @@ https://github.com/DiNitride/Discord-Music-Status
 
 ### To-Do:
 ~~* Logo (in progress...).~~
+* Discord RPC Api
 * Debug the app. (60%?, need your help :3)
 * Add custom modes to show the current song (in progress...).
 * Add more music players support.
