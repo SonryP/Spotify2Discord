@@ -29,6 +29,9 @@
             this.Btn_Comenzar = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.Btn_Detener = new System.Windows.Forms.Button();
+            this.songPositionBar = new System.Windows.Forms.ProgressBar();
+            this.lblCurrent = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_Cancion
@@ -42,7 +45,7 @@
             // 
             // Btn_Comenzar
             // 
-            this.Btn_Comenzar.Location = new System.Drawing.Point(12, 38);
+            this.Btn_Comenzar.Location = new System.Drawing.Point(12, 43);
             this.Btn_Comenzar.Name = "Btn_Comenzar";
             this.Btn_Comenzar.Size = new System.Drawing.Size(214, 32);
             this.Btn_Comenzar.TabIndex = 1;
@@ -52,13 +55,13 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 1000;
+            this.timer1.Interval = 1200;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // Btn_Detener
             // 
             this.Btn_Detener.Enabled = false;
-            this.Btn_Detener.Location = new System.Drawing.Point(239, 38);
+            this.Btn_Detener.Location = new System.Drawing.Point(239, 43);
             this.Btn_Detener.Name = "Btn_Detener";
             this.Btn_Detener.Size = new System.Drawing.Size(214, 32);
             this.Btn_Detener.TabIndex = 2;
@@ -66,11 +69,40 @@
             this.Btn_Detener.UseVisualStyleBackColor = true;
             this.Btn_Detener.Click += new System.EventHandler(this.Btn_Detener_Click);
             // 
+            // songPositionBar
+            // 
+            this.songPositionBar.Location = new System.Drawing.Point(43, 27);
+            this.songPositionBar.Name = "songPositionBar";
+            this.songPositionBar.Size = new System.Drawing.Size(376, 12);
+            this.songPositionBar.TabIndex = 3;
+            // 
+            // lblCurrent
+            // 
+            this.lblCurrent.AutoSize = true;
+            this.lblCurrent.Location = new System.Drawing.Point(9, 26);
+            this.lblCurrent.Name = "lblCurrent";
+            this.lblCurrent.Size = new System.Drawing.Size(28, 13);
+            this.lblCurrent.TabIndex = 4;
+            this.lblCurrent.Text = "0:00";
+            this.lblCurrent.Click += new System.EventHandler(this.lblCurrent_Click);
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Location = new System.Drawing.Point(425, 26);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(28, 13);
+            this.lblTotal.TabIndex = 5;
+            this.lblTotal.Text = "0:00";
+            // 
             // InterfazInicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 75);
+            this.ClientSize = new System.Drawing.Size(465, 87);
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.lblCurrent);
+            this.Controls.Add(this.songPositionBar);
             this.Controls.Add(this.Btn_Detener);
             this.Controls.Add(this.Btn_Comenzar);
             this.Controls.Add(this.lbl_Cancion);
@@ -91,6 +123,9 @@
         private System.Windows.Forms.Button Btn_Comenzar;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button Btn_Detener;
+        private System.Windows.Forms.ProgressBar songPositionBar;
+        private System.Windows.Forms.Label lblCurrent;
+        private System.Windows.Forms.Label lblTotal;
     }
 }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SpotifyAPI.Local;
+using SpotifyAPI.Local.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Discord.Commands;
 
 namespace Spotify2Discord {
     public partial class InterfazInicio : Form {
@@ -16,71 +17,113 @@ namespace Spotify2Discord {
             InitializeComponent();
         }
         NotifyIcon notify = new NotifyIcon();
-        Bot robot;
-        string token = "";
+        SpotifyLocalAPI spotify;
+        StatusResponse status;
+        Track track;
+        DiscordConnect dc;
+        string song = "";
+
         private void InterfazInicio_Load(object sender, EventArgs e) {
-            //Get the user token from Token.txt on App Location
-            token = System.IO.File.ReadAllText(Application.StartupPath + "\\Token.txt");
-            if (string.IsNullOrWhiteSpace(token)||token.Equals("PasteYourTokenHere")) {
-                MessageBox.Show("Please paste your Discord Token on the Token.txt file and restart the app.");
-                Btn_Comenzar.Enabled = false;
-                lbl_Cancion.Text = "Please restart the application to re-check the token :(.";
-            }
+            spotify = new SpotifyLocalAPI();
         }
 
-        //Function from https://stackoverflow.com/questions/37854194/get-current-song-name-for-a-local-application
-        public string GetSpotifyTrackInfo() {
-            var proc = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
-            if (proc == null) {
-                return "Spotify - Stopped";
+        public bool Connect() {
+            if (!SpotifyLocalAPI.IsSpotifyRunning()) {
+                MessageBox.Show("Spotify isn't running!");
+                return false;
+            }
+            if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning()) {
+                MessageBox.Show("SpotifyWebHelper isn't running!");
+                return false;
             }
 
-            if (string.Equals(proc.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase)) {
-                return "Spotify - Paused";
-            }
-            return proc.MainWindowTitle;
-        }
-        
-
-        private void Btn_Comenzar_ClickAsync(object sender, EventArgs e) {
-            Btn_Comenzar.Enabled = false;
-            Btn_Detener.Enabled = true;
-            lbl_Cancion.Text = "Current Song: " + GetSpotifyTrackInfo();
-            robot = new Bot(token) {
-                token = token,
-                song = GetSpotifyTrackInfo()
-            };
-            timer1.Enabled = true;
-        }
-        private bool ComprobarRepeticion(string sng) {
-            if(sng == GetSpotifyTrackInfo()) {
+            bool successful = spotify.Connect();
+            if (successful) {
+                spotify.ListenForEvents = true;
                 return true;
             } else {
+                DialogResult res = MessageBox.Show("Couldn't connect to the spotify client. Retry?", "Spotify", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                    Connect();
+                    return true;
+            }
+        }
+
+
+        private void Btn_Comenzar_ClickAsync(object sender, EventArgs e) {
+           
+            if (Connect()) {
+                Btn_Comenzar.Enabled = false;
+                Btn_Detener.Enabled = true;
+                status = spotify.GetStatus();
+                track = status.Track;
+                song = track.ArtistResource.Name + " - " + track.TrackResource.Name;
+                lbl_Cancion.Text = "Current Song: " + song;
+                songPositionBar.Maximum = track.Length;
+                songPositionBar.Value = (int)status.PlayingPosition;
+                dc = new DiscordConnect(track.ArtistResource.Name, track.TrackResource.Name, track.Length, (int)status.PlayingPosition);
+                timer1.Enabled = true;
+            }
+        }
+
+        private string SecondsToMinutes(int seconds) {
+            TimeSpan t = TimeSpan.FromSeconds(seconds);
+
+            string conversion = string.Format("{0:D2}:{1:D2}",
+                t.Minutes,
+                t.Seconds);
+            return conversion;
+        }
+        
+        public bool SpotTrack() {
+            try{
+                track = status.Track;
+                return true;
+            } catch{
                 return false;
             }
         }
 
-        string music = "";
         private void Timer1_Tick(object sender, EventArgs e) {
-            notify.Text = "S2D: " + (music.Length<=64?music:music.Substring(0,58)).ToString();
-            if (ComprobarRepeticion(music)) {
-                lbl_Cancion.Text = "Current Song: " + GetSpotifyTrackInfo();
-                music = GetSpotifyTrackInfo();
-                robot.asong = music;
-                robot.MusicNew();
+                status = spotify.GetStatus();
+           if (SpotTrack()) {
+                song = track.ArtistResource.Name + " - " + track.TrackResource.Name;
+                notify.Text = "S2D: " + (song.Length >= 60 ? song.Substring(0, 50) : song);
+                if (status.Playing) {
+                    lbl_Cancion.Text = "Current Song: " + song + " > Playing";
+                    dc.imageKey = "play";
+                    dc.imageText = "Playing";
+                } else {
+                    lbl_Cancion.Text = "Current Song: " + song + " > Paused";
+                    dc.imageKey = "pause";
+                    dc.imageText = "Paused";
+                }
 
+                lblTotal.Text = SecondsToMinutes(track.Length);
+                lblCurrent.Text = SecondsToMinutes((int)status.PlayingPosition);
+                songPositionBar.Maximum = track.Length;
+                songPositionBar.Value = (int)status.PlayingPosition;
+                dc.details = track.ArtistResource.Name;
+                dc.state = track.TrackResource.Name;
+                dc.UpdateStatus(track.Length, (int)status.PlayingPosition);
             } else {
-               lbl_Cancion.Text = "Current Song: " + GetSpotifyTrackInfo();
-                music = GetSpotifyTrackInfo();
-                robot.asong = music;
-                robot.MusicNew();
-            }
+                    Btn_Comenzar.Enabled = true;
+                    timer1.Enabled = false;
+                    dc.StopStatus();
+                    Btn_Detener.Enabled = false;
+                    notify.BalloonTipText = "Spotify was Closed";
+                    notify.BalloonTipTitle = "Spotify2Discord";
+                    notify.Icon = this.Icon;
+                    notify.Visible = true;
+                    notify.ShowBalloonTip(100);
+                }
+                    
         }
 
         private void Btn_Detener_Click(object sender, EventArgs e) {
             Btn_Comenzar.Enabled = true;
             timer1.Enabled = false;
-            robot.MusicStop();
+            dc.StopStatus();
             Btn_Detener.Enabled = false;
         }
 
@@ -102,10 +145,14 @@ namespace Spotify2Discord {
         }
 
         private void InterfazInicio_FormClosing(object sender, FormClosingEventArgs e) {
-            if (robot != null) {
+            if (dc != null) {
                 timer1.Enabled = false;
-                robot.MusicStop();
+                dc.StopStatus();
             }
+        }
+
+        private void lblCurrent_Click(object sender, EventArgs e) {
+            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }
     }
 }
